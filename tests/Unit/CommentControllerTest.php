@@ -31,7 +31,7 @@ class CommentControllerTest extends TestCase
     {
         $user = User::factory()->createOne();
         $post = Post::factory()->createOne();
-        $comment = Comment::factory()->for($user,"user")->create([
+        $comment = Comment::factory()->for($user, "user")->create([
             'commentable_id' => $post->id,
             'commentable_type' => Post::class,]);
 
@@ -47,9 +47,10 @@ class CommentControllerTest extends TestCase
     }
 
     public function test_update_updates_comment()
-    {   $user = User::factory()->createOne();
+    {
+        $user = User::factory()->createOne();
         $post = Post::factory()->createOne();
-        $comment = Comment::factory()->for($user,'user')->create([
+        $comment = Comment::factory()->for($user, 'user')->create([
             'commentable_id' => $post->id,
             'commentable_type' => Post::class,]);
         $data = ['body' => 'Updated comment body'];
@@ -58,16 +59,17 @@ class CommentControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                    'id' => $comment->id,
-                    'body' => 'Updated comment body',
+                'id' => $comment->id,
+                'body' => 'Updated comment body',
             ]);
         $this->assertDatabaseHas('comments', $data);
     }
 
     public function test_destroy_deletes_comment()
-    {   $post = Post::factory()->createOne();
+    {
+        $post = Post::factory()->createOne();
         $user = User::factory()->createOne();
-        $comment = Comment::factory()->for($user,'user')->create([
+        $comment = Comment::factory()->for($user, 'user')->create([
             'commentable_id' => $post->id,
             'commentable_type' => Post::class,]);
 
